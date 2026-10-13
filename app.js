@@ -1,18 +1,6 @@
 // ===================== State =====================
 let tasks = [];
 
-// ===================== Storage =====================
-const STORAGE_KEY = "class-tasks";
-
-function saveTasks() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-}
-
-function loadTasks() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  tasks = raw ? JSON.parse(raw) : [];
-}
-
 // ===================== Task logic =====================
 function createTask(text) {
   return {
@@ -24,20 +12,20 @@ function createTask(text) {
 
 function addTask(text) {
   tasks.push(createTask(text));
-  saveTasks();
+  persist();
   renderList();
 }
 
 function toggleTask(id) {
   const task = tasks.find((t) => t.id === id);
   task.done = !task.done;
-  saveTasks();
+  persist();
   renderList();
 }
 
 function deleteTask(id) {
   tasks = tasks.filter((t) => t.id !== id);
-  saveTasks();
+  persist();
   renderList();
 }
 
