@@ -11,18 +11,24 @@ Your instructor will merge everyone's work live in class.
 ## Workflow
 
 ```bash
+# 1. Download the repo to your computer
 git clone <repo-url>
 cd class-tasks
-git checkout -b feature/<your-name>
 
-# ...implement your feature, test it in the browser...
+# 2. Create your own branch and move onto it
+git switch -c feature/<your-name>
 
+# 3. Implement your feature, then test it in the browser
+
+# 4. Save your work in a commit
 git add .
 git commit -m "Add <your feature>"
+
+# 5. Upload your branch to GitHub (-u links it to GitHub the first time)
 git push -u origin feature/<your-name>
 ```
 
-Then open a pull request on GitHub from `feature/<your-name>` into `main`.
+6. On GitHub, open a pull request from `feature/<your-name>` into `main`.
 
 ## Rules (these matter!)
 
