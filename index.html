@@ -15,8 +15,19 @@
     <div id="toolbar">
       <form id="add-form">
         <input id="new-task" type="text" placeholder="What needs to be done?" autocomplete="off">
+        <select id="task-priority" aria-label="Task priority">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+        <input id="new-task-date" type="date" aria-label="Due date">
         <button type="submit">Add</button>
       </form>
+      <div id="filters">
+        <button type="button" class="filter-btn active" data-filter="all">All</button>
+        <button type="button" class="filter-btn" data-filter="active">Active</button>
+        <button type="button" class="filter-btn" data-filter="done">Done</button>
+      </div>
     </div>
 
     <ul id="task-list"></ul>
