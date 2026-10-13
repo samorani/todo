@@ -80,6 +80,11 @@ button {
   background: #e03131;
 }
 
+#undo-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
 #counter {
   color: #666666;
 }

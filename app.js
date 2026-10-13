@@ -36,10 +36,32 @@ function toggleTask(id) {
 }
 
 function deleteTask(id) {
+  const index = tasks.findIndex((t) => t.id === id);        // added
+  lastDeleted = { task: tasks[index], index: index };       // added
   tasks = tasks.filter((t) => t.id !== id);
   saveTasks();
   renderList();
+  updateUndoButton();                                       // added
 }
+
+// ===================== Undo delete =====================
+// The most recently deleted task and the position it had: { task, index }
+let lastDeleted = null;
+
+function undoDelete() {
+  if (lastDeleted === null) return;
+  tasks.splice(lastDeleted.index, 0, lastDeleted.task);
+  lastDeleted = null;
+  saveTasks();
+  renderList();
+  updateUndoButton();
+}
+
+function updateUndoButton() {
+  document.getElementById("undo-btn").disabled = lastDeleted === null;
+}
+
+document.getElementById("undo-btn").addEventListener("click", undoDelete);
 
 // ===================== Rendering =====================
 function renderTask(task) {
