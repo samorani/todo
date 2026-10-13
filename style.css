@@ -1,12 +1,12 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #f4f4f8;
+  background: #cc2f9b;
   color: #222222;
 }
 
 header {
-  background: #3b5bdb;
+  background: #274cde;
   color: #ffffff;
   padding: 16px 24px;
 }
@@ -81,11 +81,11 @@ button {
 }
 
 #counter {
-  color: #666666;
+  color: #21dd2b;
 }
 
 footer {
   text-align: center;
-  color: #666666;
+  color: #f22424;
   padding: 16px;
 }
