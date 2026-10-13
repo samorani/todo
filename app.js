@@ -36,9 +36,15 @@ function toggleTask(id) {
 }
 
 function deleteTask(id) {
-  tasks = tasks.filter((t) => t.id !== id);
-  saveTasks();
-  renderList();
+  const dialog = document.getElementById("confirm-dialog");
+  dialog.returnValue = "";
+  dialog.onclose = () => {
+    if (dialog.returnValue !== "ok") return;
+    tasks = tasks.filter((t) => t.id !== id);
+    saveTasks();
+    renderList();
+  };
+  dialog.showModal();
 }
 
 // ===================== Rendering =====================
