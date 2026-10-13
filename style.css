@@ -51,6 +51,22 @@ button {
   cursor: pointer;
 }
 
+#filters {
+  display: flex;
+  gap: 4px;
+}
+
+.filter-btn {
+  background: #ffffff;
+  color: #3b5bdb;
+  border: 1px solid #3b5bdb;
+}
+
+.filter-btn.active {
+  background: #3b5bdb;
+  color: #ffffff;
+}
+
 #task-list {
   list-style: none;
   padding: 0;

@@ -1,5 +1,6 @@
 // ===================== State =====================
 let tasks = [];
+let currentFilter = "all"; // "all" | "active" | "done"
 
 // ===================== Storage =====================
 const STORAGE_KEY = "class-tasks";
@@ -11,6 +12,19 @@ function saveTasks() {
 function loadTasks() {
   const raw = localStorage.getItem(STORAGE_KEY);
   tasks = raw ? JSON.parse(raw) : [];
+}
+
+const FILTER_KEY = "class-tasks-filter";
+
+function saveFilter() {
+  localStorage.setItem(FILTER_KEY, currentFilter);
+}
+
+function loadFilter() {
+  const saved = localStorage.getItem(FILTER_KEY);
+  if (saved === "all" || saved === "active" || saved === "done") {
+    currentFilter = saved;
+  }
 }
 
 // ===================== Task logic =====================
@@ -68,7 +82,13 @@ function renderList() {
   const list = document.getElementById("task-list");
   list.innerHTML = "";
 
-  for (const task of tasks) {
+  const visibleTasks = tasks.filter((t) => {
+    if (currentFilter === "active") return !t.done;
+    if (currentFilter === "done") return t.done;
+    return true;
+  });
+
+  for (const task of visibleTasks) {
     list.appendChild(renderTask(task));
   }
 
@@ -86,5 +106,22 @@ document.getElementById("add-form").addEventListener("submit", (event) => {
   input.value = "";
 });
 
+function highlightFilterButton() {
+  for (const b of document.querySelectorAll(".filter-btn")) {
+    b.classList.toggle("active", b.dataset.filter === currentFilter);
+  }
+}
+
+for (const button of document.querySelectorAll(".filter-btn")) {
+  button.addEventListener("click", () => {
+    currentFilter = button.dataset.filter;
+    saveFilter();
+    highlightFilterButton();
+    renderList();
+  });
+}
+
 loadTasks();
+loadFilter();
+highlightFilterButton();
 renderList();
