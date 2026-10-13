@@ -41,6 +41,19 @@ function deleteTask(id) {
   renderList();
 }
 
+function clearCompleted() {
+  tasks = tasks.filter((task) => !task.done);
+  saveTasks();
+  renderList();
+}
+
+const clearButton = document.createElement("button");
+clearButton.type = "button";
+clearButton.textContent = "Clear completed";
+clearButton.addEventListener("click", clearCompleted);
+
+document.getElementById("add-form").appendChild(clearButton);
+
 // ===================== Rendering =====================
 function renderTask(task) {
   const li = document.createElement("li");
