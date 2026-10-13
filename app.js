@@ -28,17 +28,18 @@ function loadFilter() {
 }
 
 // ===================== Task logic =====================
-function createTask(text, priority) {
+function createTask(text, priority, dueDate) {
   return {
     id: Date.now(),
     text: text,
     priority: priority,
+    dueDate: dueDate,
     done: false
   };
 }
 
-function addTask(text, priority) {
-  tasks.push(createTask(text, priority));
+function addTask(text, priority, dueDate) {
+  tasks.push(createTask(text, priority, dueDate));
   saveTasks();
   renderList();
 }
@@ -87,12 +88,25 @@ function renderTask(task) {
   priority.className = "priority-label priority-" + (task.priority || "medium");
   priority.textContent = task.priority || "medium";
 
+  const parts = [checkbox, label, priority];
+  if (task.dueDate) {
+    const dueDate = document.createElement("time");
+    dueDate.className = "task-date";
+    dueDate.dateTime = task.dueDate;
+    dueDate.textContent = task.dueDate;
+    const today = new Date().toLocaleDateString("en-CA");
+    if (!task.done && task.dueDate < today) {
+      dueDate.classList.add("overdue");
+    }
+    parts.push(dueDate);
+  }
+
   const deleteButton = document.createElement("button");
   deleteButton.className = "delete-btn";
   deleteButton.textContent = "✕";
   deleteButton.addEventListener("click", () => deleteTask(task.id));
 
-  li.append(checkbox, label, priority, deleteButton);
+  li.append(...parts, deleteButton);
   return li;
 }
 
@@ -118,11 +132,13 @@ function renderList() {
 document.getElementById("add-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const input = document.getElementById("new-task");
+  const dateInput = document.getElementById("new-task-date");
   const text = input.value.trim();
   if (text === "") return;
   const priority = document.getElementById("task-priority").value;
-  addTask(text, priority);
+  addTask(text, priority, dateInput.value);
   input.value = "";
+  dateInput.value = "";
 });
 
 function highlightFilterButton() {
