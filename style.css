@@ -35,7 +35,8 @@ main {
   flex: 1;
 }
 
-#new-task {
+#new-task,
+#search {
   flex: 1;
   padding: 8px;
   border: 1px solid #cccccc;

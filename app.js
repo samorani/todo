@@ -68,7 +68,10 @@ function renderList() {
   const list = document.getElementById("task-list");
   list.innerHTML = "";
 
-  for (const task of tasks) {
+  const query = document.getElementById("search").value.trim().toLowerCase();
+  const visibleTasks = tasks.filter((t) => t.text.toLowerCase().includes(query));
+
+  for (const task of visibleTasks) {
     list.appendChild(renderTask(task));
   }
 
@@ -85,6 +88,8 @@ document.getElementById("add-form").addEventListener("submit", (event) => {
   addTask(text);
   input.value = "";
 });
+
+document.getElementById("search").addEventListener("input", renderList);
 
 loadTasks();
 renderList();
