@@ -80,6 +80,26 @@ button {
   background: #e03131;
 }
 
+#confirm-dialog {
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+
+#confirm-dialog p {
+  margin: 0 0 16px;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.no-btn {
+  background: #868e96;
+}
+
 #counter {
   color: #666666;
 }
