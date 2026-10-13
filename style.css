@@ -42,6 +42,12 @@ main {
   border-radius: 6px;
 }
 
+#new-task-date {
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+}
+
 button {
   padding: 8px 12px;
   border: none;
@@ -69,6 +75,15 @@ button {
 
 .task-text {
   flex: 1;
+}
+
+.task-date {
+  color: #666666;
+  white-space: nowrap;
+}
+
+.task-date.overdue {
+  color: #e03131;
 }
 
 .task.done .task-text {

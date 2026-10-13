@@ -14,16 +14,17 @@ function loadTasks() {
 }
 
 // ===================== Task logic =====================
-function createTask(text) {
+function createTask(text, dueDate) {
   return {
     id: Date.now(),
     text: text,
+    dueDate: dueDate,
     done: false
   };
 }
 
-function addTask(text) {
-  tasks.push(createTask(text));
+function addTask(text, dueDate) {
+  tasks.push(createTask(text, dueDate));
   saveTasks();
   renderList();
 }
@@ -55,6 +56,18 @@ function renderTask(task) {
   label.className = "task-text";
   label.textContent = task.text;
 
+  if (task.dueDate) {
+    const dueDate = document.createElement("time");
+    dueDate.className = "task-date";
+    dueDate.dateTime = task.dueDate;
+    dueDate.textContent = task.dueDate;
+    const today = new Date().toLocaleDateString("en-CA");
+    if (!task.done && task.dueDate < today) {
+      dueDate.classList.add("overdue");
+    }
+    li.appendChild(dueDate);
+  }
+
   const deleteButton = document.createElement("button");
   deleteButton.className = "delete-btn";
   deleteButton.textContent = "✕";
@@ -80,10 +93,12 @@ function renderList() {
 document.getElementById("add-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const input = document.getElementById("new-task");
+  const dateInput = document.getElementById("new-task-date");
   const text = input.value.trim();
   if (text === "") return;
-  addTask(text);
+  addTask(text, dateInput.value);
   input.value = "";
+  dateInput.value = "";
 });
 
 loadTasks();
