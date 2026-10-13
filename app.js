@@ -28,16 +28,17 @@ function loadFilter() {
 }
 
 // ===================== Task logic =====================
-function createTask(text) {
+function createTask(text, priority) {
   return {
     id: Date.now(),
     text: text,
+    priority: priority,
     done: false
   };
 }
 
-function addTask(text) {
-  tasks.push(createTask(text));
+function addTask(text, priority) {
+  tasks.push(createTask(text, priority));
   saveTasks();
   renderList();
 }
@@ -82,12 +83,16 @@ function renderTask(task) {
   label.className = "task-text";
   label.textContent = task.text;
 
+  const priority = document.createElement("span");
+  priority.className = "priority-label priority-" + (task.priority || "medium");
+  priority.textContent = task.priority || "medium";
+
   const deleteButton = document.createElement("button");
   deleteButton.className = "delete-btn";
   deleteButton.textContent = "✕";
   deleteButton.addEventListener("click", () => deleteTask(task.id));
 
-  li.append(checkbox, label, deleteButton);
+  li.append(checkbox, label, priority, deleteButton);
   return li;
 }
 
@@ -115,7 +120,8 @@ document.getElementById("add-form").addEventListener("submit", (event) => {
   const input = document.getElementById("new-task");
   const text = input.value.trim();
   if (text === "") return;
-  addTask(text);
+  const priority = document.getElementById("task-priority").value;
+  addTask(text, priority);
   input.value = "";
 });
 
