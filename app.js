@@ -2,31 +2,6 @@
 let tasks = [];
 let currentFilter = "all"; // "all" | "active" | "done"
 
-// ===================== Storage =====================
-const STORAGE_KEY = "class-tasks";
-
-function saveTasks() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-}
-
-function loadTasks() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  tasks = raw ? JSON.parse(raw) : [];
-}
-
-const FILTER_KEY = "class-tasks-filter";
-
-function saveFilter() {
-  localStorage.setItem(FILTER_KEY, currentFilter);
-}
-
-function loadFilter() {
-  const saved = localStorage.getItem(FILTER_KEY);
-  if (saved === "all" || saved === "active" || saved === "done") {
-    currentFilter = saved;
-  }
-}
-
 // ===================== Task logic =====================
 function createTask(text, priority, dueDate) {
   return {
@@ -40,26 +15,26 @@ function createTask(text, priority, dueDate) {
 
 function addTask(text, priority, dueDate) {
   tasks.push(createTask(text, priority, dueDate));
-  saveTasks();
+  persist();
   renderList();
 }
 
 function toggleTask(id) {
   const task = tasks.find((t) => t.id === id);
   task.done = !task.done;
-  saveTasks();
+  persist();
   renderList();
 }
 
 function deleteTask(id) {
   tasks = tasks.filter((t) => t.id !== id);
-  saveTasks();
+  persist();
   renderList();
 }
 
 function clearCompleted() {
   tasks = tasks.filter((task) => !task.done);
-  saveTasks();
+  persist();
   renderList();
 }
 
