@@ -88,3 +88,19 @@ document.getElementById("add-form").addEventListener("submit", (event) => {
 
 loadTasks();
 renderList();
+
+// ===================== Do not disturb (dark mode) =====================
+const THEME_KEY = "class-tasks-theme";
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  document.getElementById("dnd-toggle").setAttribute("aria-pressed", theme === "dark");
+}
+
+document.getElementById("dnd-toggle").addEventListener("click", () => {
+  const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(next);
+  localStorage.setItem(THEME_KEY, next);
+});
+
+applyTheme(localStorage.getItem(THEME_KEY) || "light");

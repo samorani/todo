@@ -1,13 +1,39 @@
+:root {
+  --bg: #f4f4f8;
+  --text: #222222;
+  --text-muted: #666666;
+  --text-done: #999999;
+  --primary: #3b5bdb;
+  --on-primary: #ffffff;
+  --surface: #ffffff;
+  --border: #dddddd;
+  --input-border: #cccccc;
+  --danger: #e03131;
+}
+
+:root[data-theme="dark"] {
+  --bg: #16181d;
+  --text: #e6e6eb;
+  --text-muted: #9a9aa5;
+  --text-done: #6b6b75;
+  --primary: #4c6ef5;
+  --on-primary: #ffffff;
+  --surface: #23262d;
+  --border: #33363f;
+  --input-border: #44474f;
+  --danger: #f03e3e;
+}
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #f4f4f8;
-  color: #222222;
+  background: var(--bg);
+  color: var(--text);
 }
 
 header {
-  background: #3b5bdb;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--on-primary);
   padding: 16px 24px;
 }
 
@@ -38,7 +64,7 @@ main {
 #new-task {
   flex: 1;
   padding: 8px;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--input-border);
   border-radius: 6px;
 }
 
@@ -46,8 +72,8 @@ button {
   padding: 8px 12px;
   border: none;
   border-radius: 6px;
-  background: #3b5bdb;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--on-primary);
   cursor: pointer;
 }
 
@@ -60,8 +86,8 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #ffffff;
-  border: 1px solid #dddddd;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 8px 12px;
   margin-bottom: 8px;
@@ -73,19 +99,59 @@ button {
 
 .task.done .task-text {
   text-decoration: line-through;
-  color: #999999;
+  color: var(--text-done);
 }
 
 .delete-btn {
-  background: #e03131;
+  background: var(--danger);
 }
 
 #counter {
-  color: #666666;
+  color: var(--text-muted);
 }
 
 footer {
   text-align: center;
-  color: #666666;
+  color: var(--text-muted);
   padding: 16px;
+}
+
+/* Do-not-disturb (dark mode) toggle */
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#new-task {
+  background: var(--surface);
+  color: var(--text);
+}
+
+#dnd-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+#dnd-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+#dnd-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+#dnd-toggle[aria-pressed="true"] svg {
+  fill: currentColor;
 }
