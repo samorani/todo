@@ -58,6 +58,37 @@ function renderTask(task) {
   const label = document.createElement("span");
   label.className = "task-text";
   label.textContent = task.text;
+  label.addEventListener("dblclick", () => {
+    const editor = document.createElement("input");
+    editor.type = "text";
+    editor.value = task.text;
+    editor.className = "task-edit";
+    label.replaceWith(editor);
+    editor.focus();
+    editor.select();
+
+    let editing = true;
+    const finishEditing = (cancel = false) => {
+      if (!editing) return;
+      editing = false;
+
+      const text = editor.value.trim();
+      if (!cancel && text !== "") {
+        task.text = text;
+        saveTasks();
+      }
+      renderList();
+    };
+
+    editor.addEventListener("blur", () => finishEditing());
+    editor.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        finishEditing();
+      } else if (event.key === "Escape") {
+        finishEditing(true);
+      }
+    });
+  });
 
   const priority = document.createElement("span");
   priority.className = "priority-label priority-" + (task.priority || "medium");
